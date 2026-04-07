@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cleantime — Limpieza Profesional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:    #1a56db;
+      --blue-dk: #1042b5;
+      --sky:     #e8f0fe;
+      --teal:    #0891b2;
+      --white:   #ffffff;
+      --gray-50: #f8fafc;
+      --gray-100:#f1f5f9;
+      --gray-200:#e2e8f0;
+      --gray-400:#94a3b8;
+      --gray-600:#475569;
+      --gray-800:#1e293b;
+      --gray-900:#0f172a;
+      --radius:  12px;
+      --shadow:  0 4px 24px rgba(0,0,0,.08);
+      --shadow-md: 0 8px 40px rgba(0,0,0,.12);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--white);
+      color: var(--gray-800);
+      line-height: 1.6;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 64px;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .nav-logo { display: flex; align-items: center; gap: .5rem; text-decoration: none; }
+    .nav-logo-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--blue); display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-icon svg { width: 20px; height: 20px; fill: white; }
+    .nav-logo-text { font-size: 1.15rem; font-weight: 700; color: var(--gray-900); }
+    .nav-logo-text span { color: var(--blue); }
+    .nav-admin {
+      font-size: .8rem; color: var(--gray-400); text-decoration: none;
+      padding: .3rem .75rem; border-radius: 6px; transition: all .2s;
+    }
+    .nav-admin:hover { color: var(--blue); background: var(--sky); }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding-top: 64px;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      background: linear-gradient(135deg, var(--gray-900) 0%, #1a3a5c 50%, var(--teal) 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-content {
+      position: relative; max-width: 1100px; margin: 0 auto;
+      padding: 4rem 2rem; display: flex; align-items: center; gap: 4rem;
+      flex-wrap: wrap;
+    }
+    .hero-text { flex: 1; min-width: 280px; }
+    .hero-badge {
+      display: inline-block; padding: .35rem 1rem;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px; font-size: .8rem; font-weight: 500;
+      color: rgba(255,255,255,.9); letter-spacing: .04em; margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800;
+      color: white; line-height: 1.15; margin-bottom: 1.25rem;
+    }
+    .hero h1 em { font-style: normal; color: #7dd3fc; }
+    .hero p {
+      font-size: 1.1rem; color: rgba(255,255,255,.75);
+      max-width: 480px; margin-bottom: 2.5rem;
+    }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .75rem 1.75rem; border-radius: var(--radius);
+      font-size: .95rem; font-weight: 600; text-decoration: none;
+      cursor: pointer; border: none; transition: all .2s;
+    }
+    .btn-primary { background: var(--blue); color: white; }
+    .btn-primary:hover { background: var(--blue-dk); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,86,219,.4); }
+    .btn-outline {
+      background: transparent; color: white;
+      border: 2px solid rgba(255,255,255,.4);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.7); }
+
+    .hero-visual {
+      flex: 0 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      max-width: 320px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: var(--radius); padding: 1.25rem 1rem; text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .stat-card:first-child { grid-column: 1 / -1; }
+    .stat-number { font-size: 2rem; font-weight: 800; color: white; }
+    .stat-label { font-size: .78rem; color: rgba(255,255,255,.6); margin-top: .2rem; }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section { padding: 5rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: .5rem;
+    }
+    .section-title {
+      font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 800;
+      color: var(--gray-900); line-height: 1.2; margin-bottom: 1rem;
+    }
+    .section-sub { font-size: 1rem; color: var(--gray-600); max-width: 520px; }
+
+    /* ─── SERVICES ─── */
+    .services-bg { background: var(--gray-50); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .service-card {
+      background: white; border-radius: 16px;
+      padding: 2rem; box-shadow: var(--shadow);
+      border: 1px solid var(--gray-200);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .service-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: var(--sky); display: flex; align-items: center;
+      justify-content: center; margin-bottom: 1.25rem;
+    }
+    .service-icon svg { width: 26px; height: 26px; stroke: var(--blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .service-card h3 { font-size: 1.15rem; font-weight: 700; color: var(--gray-900); margin-bottom: .6rem; }
+    .service-card p { font-size: .92rem; color: var(--gray-600); line-height: 1.7; }
+    .service-tag {
+      display: inline-block; margin-top: 1.25rem;
+      padding: .25rem .75rem; background: var(--sky);
+      border-radius: 999px; font-size: .75rem; font-weight: 600; color: var(--blue);
+    }
+
+    /* ─── WHY US ─── */
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem; margin-top: 3rem;
+    }
+    .why-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .why-icon {
+      flex-shrink: 0; width: 44px; height: 44px; border-radius: 10px;
+      background: var(--sky); display: flex; align-items: center; justify-content: center;
+    }
+    .why-icon svg { width: 22px; height: 22px; stroke: var(--blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .why-item h4 { font-size: .95rem; font-weight: 700; color: var(--gray-900); margin-bottom: .25rem; }
+    .why-item p { font-size: .88rem; color: var(--gray-600); line-height: 1.65; }
+
+    /* ─── CTA BANNER ─── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%);
+      border-radius: 20px; padding: 3rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap; margin-top: 5rem;
+    }
+    .cta-banner h2 { font-size: 1.7rem; font-weight: 800; color: white; }
+    .cta-banner p { color: rgba(255,255,255,.8); margin-top: .4rem; font-size: .97rem; }
+    .btn-white { background: white; color: var(--blue); }
+    .btn-white:hover { background: var(--sky); transform: translateY(-1px); }
+
+    /* ─── CONTACT ─── */
+    .contact-bg { background: var(--gray-900); }
+    .contact-bg .section-title { color: white; }
+    .contact-bg .section-sub { color: var(--gray-400); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+      margin-top: 3rem;
+    }
+    @media (max-width: 640px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-icon {
+      width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(255,255,255,.08); display: flex; align-items: center; justify-content: center;
+    }
+    .contact-icon svg { width: 20px; height: 20px; stroke: #7dd3fc; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .contact-item h4 { font-size: .85rem; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: .05em; }
+    .contact-item p { color: white; font-size: .97rem; margin-top: .15rem; }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%; padding: .75rem 1rem;
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius); color: white; font-family: inherit; font-size: .95rem;
+      outline: none; transition: border-color .2s;
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: var(--gray-400); }
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: var(--blue); }
+    .contact-form textarea { resize: vertical; min-height: 110px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--gray-900); border-top: 1px solid rgba(255,255,255,.07);
+      padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    footer p { font-size: .82rem; color: var(--gray-400); }
+    .footer-admin {
+      font-size: .78rem; color: rgba(255,255,255,.2);
+      text-decoration: none; transition: color .2s;
+    }
+    .footer-admin:hover { color: var(--gray-400); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .hero-content { flex-direction: column; gap: 2.5rem; }
+      .hero-visual { max-width: 100%; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+    </div>
+    <span class="nav-logo-text">Clean<span>time</span></span>
+  </a>
+  <a href="https://admin.cleantime.cl" class="nav-admin">Acceso admin →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">✦ Servicios profesionales de limpieza</div>
+      <h1>Espacios impecables,<br><em>resultados que se notan</em></h1>
+      <p>Limpieza fina y post construcción con los más altos estándares de calidad. Dejamos cada rincón listo para que lo disfrutes.</p>
+      <div class="hero-cta">
+        <a href="#contacto" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Solicitar cotización
+        </a>
+        <a href="#servicios" class="btn btn-outline">Ver servicios</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="stat-card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Satisfacción garantizada</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+5</div>
+        <div class="stat-label">Años de experiencia</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+200</div>
+        <div class="stat-label">Proyectos completados</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="section services-bg" id="servicios">
+  <div class="section-inner">
+    <div class="section-tag">Nuestros servicios</div>
+    <h2 class="section-title">Limpieza especializada<br>para cada necesidad</h2>
+    <p class="section-sub">Contamos con equipos capacitados y productos profesionales para cada tipo de trabajo.</p>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Limpieza Fina</h3>
+        <p>Limpieza detallada y exhaustiva de interiores. Cuidamos cada superficie, mueble y rincón de tu hogar u oficina con productos de alta calidad.</p>
+        <span class="service-tag">Residencial &amp; Comercial</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>Limpieza Post Construcción</h3>
+        <p>Retiro completo de escombros, polvo de obra, residuos de pintura, sello y más. Dejamos tu proyecto recién construido listo para habitar.</p>
+        <span class="service-tag">Obras &amp; Remodelaciones</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <h3>Sanitización y Desinfección</h3>
+        <p>Aplicación de productos desinfectantes certificados para ambientes libres de gérmenes y bacterias. Ideal para empresas, clínicas y hogares.</p>
+        <span class="service-tag">Residencial &amp; Empresas</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ ELEGIRNOS -->
+<section class="section" id="nosotros">
+  <div class="section-inner">
+    <div class="section-tag">¿Por qué elegirnos?</div>
+    <h2 class="section-title">Compromiso con la calidad<br>en cada trabajo</h2>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h4>Personal capacitado</h4>
+          <p>Equipo profesional, verificado y con experiencia en limpieza especializada.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div>
+          <h4>Productos certificados</h4>
+          <p>Usamos insumos de limpieza profesionales, biodegradables y seguros.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <h4>Puntualidad garantizada</h4>
+          <p>Respetamos tus horarios. Llegamos a tiempo y terminamos según lo acordado.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <h4>Atención personalizada</h4>
+          <p>Adaptamos el servicio a tus necesidades específicas y presupuesto.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <div>
+        <h2>¿Listo para un espacio impecable?</h2>
+        <p>Solicita tu cotización sin compromiso. Respondemos en menos de 24 horas.</p>
+      </div>
+      <a href="#contacto" class="btn btn-white">Cotizar ahora →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="section contact-bg" id="contacto">
+  <div class="section-inner">
+    <div class="section-tag" style="color:#7dd3fc">Contáctanos</div>
+    <h2 class="section-title">Hablemos de tu proyecto</h2>
+    <p class="section-sub">Completa el formulario o escríbenos directamente. Estamos para ayudarte.</p>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <h4>Teléfono</h4>
+            <p>+56 9 XXXX XXXX</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <h4>Correo electrónico</h4>
+            <p>contacto@cleantime.cl</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <h4>Cobertura</h4>
+            <p>Región Metropolitana, Chile</p>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" onsubmit="handleForm(event)">
+        <input type="text" placeholder="Tu nombre" required />
+        <input type="tel" placeholder="Teléfono o WhatsApp" />
+        <input type="email" placeholder="Correo electrónico" required />
+        <textarea placeholder="Cuéntanos qué necesitas (tipo de limpieza, m², fecha aproximada...)"></textarea>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start">
+          Enviar mensaje →
+        </button>
+        <p id="form-msg" style="display:none;color:#7dd3fc;font-size:.88rem;margin-top:.25rem">✓ Mensaje enviado. Te contactaremos pronto.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Cleantime. Todos los derechos reservados.</p>
+  <a href="https://admin.cleantime.cl" class="footer-admin">Panel admin</a>
+</footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  // Form submit (placeholder)
+  function handleForm(e) {
+    e.preventDefault();
+    document.getElementById('form-msg').style.display = 'block';
+    e.target.reset();
+  }
+</script>
+
+</body>
+</html>
