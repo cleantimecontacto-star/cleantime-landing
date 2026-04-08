@@ -406,15 +406,19 @@
         </div>
       </div>
 
-      <form class="contact-form" onsubmit="handleForm(event)">
-        <input type="text" placeholder="Tu nombre" required />
-        <input type="tel" placeholder="Teléfono o WhatsApp" />
-        <input type="email" placeholder="Correo electrónico" required />
-        <textarea placeholder="Cuéntanos qué necesitas (tipo de limpieza, m², fecha aproximada...)"></textarea>
-        <button type="submit" class="btn btn-primary" style="align-self:flex-start">
+      <form class="contact-form" id="contact-form">
+        <input type="hidden" name="access_key" value="120f1622-6acf-4b7d-9436-e31a83328af1" />
+        <input type="hidden" name="subject" value="Nuevo mensaje desde www.cleantime.cl" />
+        <input type="hidden" name="from_name" value="Cleantime Web" />
+        <input type="text" name="name" placeholder="Tu nombre" required />
+        <input type="tel" name="phone" placeholder="Teléfono o WhatsApp" />
+        <input type="email" name="email" placeholder="Correo electrónico" required />
+        <textarea name="message" placeholder="Cuéntanos qué necesitas (tipo de limpieza, m², fecha aproximada...)"></textarea>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start" id="submit-btn">
           Enviar mensaje →
         </button>
         <p id="form-msg" style="display:none;color:#7dd3fc;font-size:.88rem;margin-top:.25rem">✓ Mensaje enviado. Te contactaremos pronto.</p>
+        <p id="form-err" style="display:none;color:#fca5a5;font-size:.88rem;margin-top:.25rem">⚠ Error al enviar. Intenta por WhatsApp.</p>
       </form>
     </div>
   </div>
@@ -435,12 +439,32 @@
     });
   });
 
-  // Form submit (placeholder)
-  function handleForm(e) {
+  // Form submit via Web3Forms
+  document.getElementById('contact-form').addEventListener('submit', async function(e) {
     e.preventDefault();
-    document.getElementById('form-msg').style.display = 'block';
-    e.target.reset();
-  }
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    const formData = new FormData(this);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('form-msg').style.display = 'block';
+        document.getElementById('form-err').style.display = 'none';
+        this.reset();
+      } else {
+        document.getElementById('form-err').style.display = 'block';
+      }
+    } catch(err) {
+      document.getElementById('form-err').style.display = 'block';
+    }
+    btn.disabled = false;
+    btn.textContent = 'Enviar mensaje →';
+  });
 </script>
 
 
